@@ -34,7 +34,6 @@ app.post('/api/v1/services', asyncHandler(async (req, res) => {
         }
     }
 
-    //Return
     res.json({result: false, errorMessage: 'Cannot find Paths'});
 }))
 
@@ -56,7 +55,7 @@ app.post('/api/v1/services/:serviceId/routes', asyncHandler(async (req, res) => 
         if (!methods || _.isEmpty(methods)) {
             return res.json({result: false, errorMessage: 'Cannot find Paths'});
         }
-
+        // check if valid method
         if (!utils.isAllowMethods(methods)) {
             return res.json({result: false, errorMessage: 'Not valid methods'});
         }
@@ -66,7 +65,6 @@ app.post('/api/v1/services/:serviceId/routes', asyncHandler(async (req, res) => 
 
     console.log('Validation pass!')
     //Update Service
- //   const path = {path: '/test', methods: ['GET', 'PUT']};
     const resultUpdate = await Service.findOneAndUpdate({_id:serviceId},{paths:paths,methods:methods})
     console.log(resultUpdate)
 
@@ -79,14 +77,14 @@ app.post('/api/v1/services/:serviceId/routes', asyncHandler(async (req, res) => 
 }))
 
 async  function  getRoutesAndExpose() {
-    //should come from database
+
     let routes = await Service.find({}).select({paths:1});
 
      for (let indexRoute in routes) {
             let routeRow = routes[indexRoute].paths;
             for (let routeSingleIndex in routeRow){
                 let routeSingle = routeRow[routeSingleIndex];
-                genericRoute(routeSingle);
+                 genericRoute(routeSingle);
             }
      }
 }
@@ -171,10 +169,7 @@ async function genericRoute(route) {
 //     return res.send(clientRes)
 // }))
 
-// 1. find object by service name by url(for example: httpbin)
-// 2. find if route exist in routeToMethods
-// 3. find if Request Method is supported (get/post or what ever)
-// 4. make the request
+
 
 
 
