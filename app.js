@@ -5,8 +5,8 @@ const app = express();
 const asyncHandler = require('express-async-handler');
 const bodyParser = require('body-parser')
 const request = require('request');
-var mongoose = require('./node_modules/mongoose');
-require('./src/db/mongoose')
+const mongoose = require('./node_modules/mongoose');
+require('./src/db/mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
 const Service = require('./src/models/service')
 const utils = require('./src/utils/utils')
@@ -174,6 +174,6 @@ async function genericRoute(route) {
 
 
 
-app.listen(3000, '0.0.0.0', () => {
+app.listen(process.env.PORT || 3000,() => {
     console.log("Server running on port 3000");
 });
